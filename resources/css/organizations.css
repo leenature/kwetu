@@ -1,0 +1,18 @@
+.admin-label { display: inline-flex; align-items: center; gap: .45rem; color: #b91c1c; background: #fee2e2; border-radius: 999px; padding: .5rem .8rem; font-size: .78rem; font-weight: 700; }
+.back-link { color: #64748b; font-size: .9rem; text-decoration: none; }
+.back-link:hover { color: #2563eb; }
+.organization-table-card { padding: 1.5rem; }
+.details-list { display: grid; gap: 1rem; margin: 0; }
+.details-list > div { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: .8rem; }
+.details-list > div:last-child { border-bottom: 0; padding-bottom: 0; }
+.details-list dt { color: #64748b; font-weight: 500; }
+.details-list dd { margin: 0; font-weight: 600; text-align: right; }
+.user-row { display: flex; align-items: center; gap: .8rem; padding: .85rem 0; border-bottom: 1px solid #e2e8f0; }
+.user-row:last-child { border-bottom: 0; }
+.user-row small { display: block; color: #64748b; font-size: .8rem; }
+.user-initial { display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: 50%; color: #1d4ed8; background: #dbeafe; font-weight: 800; }
+.role-label { border-radius: 999px; padding: .3rem .55rem; background: #f1f5f9; color: #475569; font-size: .72rem; font-weight: 700; }
+.subscription-form { padding: clamp(1.25rem, 3vw, 2.25rem); max-width: 900px; }
+.access-note, .credential-note { color: #475569; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: .65rem; padding: .75rem .9rem; font-size: .88rem; }
+.access-note i, .credential-note i { color: #2563eb; margin-right: .4rem; }
+@media (max-width: 575.98px) { .module-header { align-items: flex-start; } .details-list > div { display: block; } .details-list dd { text-align: left; margin-top: .25rem; } }

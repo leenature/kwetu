@@ -54,16 +54,21 @@
 
                         <td>{{ $tenant->phone }}</td>
 
-                        <td>{{ $tenant->unit->unit_number }}</td>
+                        <td>{{ $tenant->currentLease?->unit?->unit_number ?? 'Unassigned' }}</td>
+                        <td>{{ $tenant->currentLease?->unit?->property?->name ?? '—' }}</td>
 
-                        <td>{{ $tenant->unit->property->name }}</td>
-
-                        <td>
+                            <td>
 
                             <a href="{{ route('tenants.edit',$tenant) }}"
                                class="btn btn-warning btn-sm">
                                 Edit
                             </a>
+
+                            @if($tenant->portal_token)
+                                <a href="{{ route('tenant-portal.show', $tenant->portal_token) }}" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm" title="Open tenant portal">
+                                    Portal
+                                </a>
+                            @endif
 
                             <form action="{{ route('tenants.destroy',$tenant) }}"
                                   method="POST"

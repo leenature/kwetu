@@ -15,6 +15,10 @@ return new class extends Migration
 
             $table->id();
 
+            $table->foreignId('organization_id')
+                  ->constrained()
+                  ->cascadeOnDelete();
+
             $table->foreignId('tenant_id')
                   ->constrained()
                   ->cascadeOnDelete();
@@ -47,7 +51,6 @@ return new class extends Migration
 
             $table->timestamps();
 
-            // Prevent duplicate active lease for the same tenant and unit
             $table->unique([
                 'tenant_id',
                 'unit_id',

@@ -1,0 +1,1645 @@
+/* =====================================================
+   KWETU PMS PREMIUM DASHBOARD
+   SaaS Glassmorphism UI
+   Clean Version
+===================================================== */
+
+
+/* =====================================================
+   DASHBOARD LAYOUT
+===================================================== */
+
+
+
+
+/* Bootstrap row fix */
+
+.dashboard-container .row {
+    margin-bottom: 1.5rem;
+}
+.dashboard-container {
+    width: 100%;
+    margin: 0;
+}
+.kpi-row > .col {
+    display: flex;
+}
+
+.kpi-row .stat-card {
+    width: 100%;
+    min-height: 170px;
+    height: 100%;
+}
+/* =====================================================
+   HERO DASHBOARD
+===================================================== */
+
+
+.hero-dashboard{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:32px;
+
+    padding:42px;
+
+    margin-bottom:35px;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        135deg,
+        #07132b,
+        #0f172a 45%,
+        #2563eb
+    );
+
+    box-shadow:
+
+    0 30px 70px rgba(0,0,0,.35);
+
+}
+
+
+
+.hero-dashboard::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+
+    height:500px;
+
+    right:-200px;
+
+    top:-200px;
+
+    background:#3b82f6;
+
+    opacity:.25;
+
+    filter:blur(120px);
+
+    border-radius:50%;
+
+    animation:
+    heroMove 10s infinite ease-in-out;
+
+}
+
+
+
+.hero-dashboard::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:400px;
+
+    height:400px;
+
+    bottom:-200px;
+
+    left:-150px;
+
+    background:#10b981;
+
+    opacity:.18;
+
+    filter:blur(120px);
+
+    border-radius:50%;
+
+    animation:
+    heroMove2 12s infinite ease-in-out;
+
+}
+
+
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:40px;
+
+}
+
+
+
+.hero-left{
+
+    flex:1;
+
+}
+
+
+
+.hero-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    background:
+
+    rgba(255,255,255,.12);
+
+    backdrop-filter:blur(20px);
+
+    font-size:13px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.hero-left h1{
+
+    font-size:42px;
+
+    font-weight:800;
+    color:rgb(255, 255, 255);
+
+}
+
+
+
+.hero-left p{
+
+    max-width:650px;
+
+    color:rgba(255,255,255,.8);
+
+    line-height:1.8;
+
+}
+
+
+
+.hero-actions{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-top:30px;
+
+}
+
+
+
+.hero-btn{
+
+    padding:13px 25px;
+
+    border-radius:16px;
+
+    font-weight:700;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    transition:.3s;
+
+}
+
+
+
+.hero-btn:hover{
+
+    transform:translateY(-5px);
+
+}
+
+
+
+/* Hero KPI */
+
+
+.hero-right{
+
+    width:360px;
+
+    display:grid;
+
+    gap:15px;
+
+}
+
+
+
+.hero-stat{
+
+    padding:20px;
+
+    border-radius:22px;
+
+    background:
+
+    rgba(255,255,255,.10);
+
+    backdrop-filter:blur(20px);
+
+    border:
+
+    1px solid rgba(255,255,255,.15);
+
+    transition:.35s;
+
+}
+
+
+
+.hero-stat:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+
+    0 0 35px rgba(56,189,248,.35);
+
+}
+
+
+
+.hero-stat small{
+
+    color:
+
+    rgba(255,255,255,.7);
+
+}
+
+
+
+.hero-stat h2{
+
+    margin:5px 0;
+
+    font-size:32px;
+
+    font-weight:800;
+
+}
+
+
+
+
+
+/* =====================================================
+   GLASS CARDS
+===================================================== */
+
+
+.glass-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    width:100%;
+
+    height:100%;
+
+    padding:30px;
+
+    border-radius:30px;
+
+
+    background:
+
+    linear-gradient(
+
+        145deg,
+
+        rgba(255,255,255,.12),
+
+        rgba(255,255,255,.04)
+
+    );
+
+
+    border:
+
+    1px solid rgba(255,255,255,.12);
+
+
+    backdrop-filter:blur(25px);
+
+
+    box-shadow:
+
+    0 20px 50px rgba(0,0,0,.25);
+
+
+    transition:.4s;
+
+}
+
+
+
+.glass-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-100%;
+
+    left:-80%;
+
+    width:60%;
+
+    height:300%;
+
+
+    background:
+
+    linear-gradient(
+
+    120deg,
+
+    transparent,
+
+    rgba(255,255,255,.25),
+
+    transparent
+
+    );
+
+
+    transform:rotate(25deg);
+
+    transition:1s;
+
+}
+
+
+
+.glass-card:hover::before{
+
+    left:160%;
+
+}
+
+
+
+.glass-card:hover{
+
+    transform:
+
+    translateY(-8px);
+
+    box-shadow:
+
+    0 30px 70px rgba(0,0,0,.35),
+
+    0 0 35px rgba(56,189,248,.2);
+
+}
+
+
+
+/* =====================================================
+   KPI CARDS
+===================================================== */
+
+
+.stat-card{
+
+    min-height:160px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+
+}
+
+
+
+.stat-content h2{
+    font-size:48px;
+    font-weight:800;
+    line-height:1;
+    margin:12px 0;
+    color:#fff;
+}
+
+
+
+.stat-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+
+.stat-header small{
+
+    color:#94a3b8;
+
+    font-size:13px;
+
+}
+
+
+
+.stat-content h2{
+
+    font-size:42px;
+
+    font-weight:800;
+
+    color:rgb(194, 15, 15);
+
+    margin:8px 0;
+
+}
+
+
+
+.trend{
+
+    padding:5px 12px;
+
+    border-radius:30px;
+
+    font-size:12px;
+
+}
+
+
+
+.trend{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+
+    margin-top:10px;
+
+    padding:6px 12px;
+
+    border-radius:30px;
+
+    font-size:12px;
+    font-weight:700;
+}
+
+.trend.up{
+
+    color:#22c55e;
+
+    background:rgba(34,197,94,.12);
+
+    border:1px solid rgba(34,197,94,.25);
+
+}
+
+.trend.down{
+
+    color:#ef4444;
+
+    background:rgba(239,68,68,.12);
+
+    border:1px solid rgba(239,68,68,.25);
+
+}
+
+
+.sparkline{
+
+    width:100%;
+
+    height:45px!important;
+
+}
+/* =====================================================
+   KPI ICONS
+===================================================== */
+
+
+.icon{
+
+    width:78px;
+    height:78px;
+    min-width:78px;
+
+    border-radius:24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:34px;
+
+    color:#fff;
+
+    box-shadow:
+
+        inset 0 2px 10px rgba(255,255,255,.15),
+
+        0 15px 25px rgba(0,0,0,.25);
+
+    transition:.35s;
+
+}
+
+.glass-card:hover .icon{
+
+    transform:
+
+        scale(1.08)
+        rotate(-6deg);
+
+
+
+
+    box-shadow:
+
+    0 0 35px rgba(56,189,248,.55);
+
+}
+
+
+
+.icon.blue{
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #60a5fa
+    );
+
+}
+
+
+
+.icon.green{
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #059669,
+        #34d399
+    );
+
+}
+
+
+
+.icon.orange{
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #d97706,
+        #fbbf24
+    );
+
+}
+
+
+
+.icon.red{
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #dc2626,
+        #fb7185
+    );
+
+}
+
+
+
+/* =====================================================
+   FINANCE CARDS
+===================================================== */
+
+
+.finance-card{
+
+   width: 100%;
+    margin-left: 0;
+
+    min-height:160px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+
+}
+
+
+
+.finance-icon{
+
+    width:75px;
+
+    height:75px;
+
+    min-width:75px;
+
+    border-radius:25px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:32px;
+
+    color:white;
+
+    transition:.35s;
+
+}
+
+
+
+.finance-card:hover .finance-icon{
+
+    transform:
+
+    scale(1.1)
+
+    rotate(-5deg);
+
+}
+
+
+
+.finance-icon.income{
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #0ea5e9,
+        #2563eb
+    );
+
+}
+
+
+
+.finance-icon.collected{
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #22c55e,
+        #16a34a
+    );
+
+}
+
+
+
+.finance-icon.outstanding{
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #ef4444,
+        #f97316
+    );
+
+}
+
+
+
+.finance-content small{
+
+    color:#94a3b8;
+
+}
+
+
+
+.finance-content h2{
+
+    font-size:30px;
+
+    font-weight:800;
+
+    color:white;
+
+}
+
+
+
+
+
+/* =====================================================
+   SECTION TITLES
+===================================================== */
+
+
+.section-title{
+
+    
+    margin-bottom:25px;
+
+}
+
+
+
+.section-title h4{
+
+    color:white;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+
+.section-title h4 i{
+
+    color:#38bdf8;
+
+    filter:
+
+    drop-shadow(
+
+    0 0 12px #38bdf8
+
+    );
+
+}
+
+
+
+.section-title small{
+
+    color:#94a3b8;
+
+}
+
+
+
+
+
+/* =====================================================
+   TABLE DESIGN
+===================================================== */
+
+
+.modern-table{
+
+    border-collapse:
+
+    separate;
+
+    border-spacing:
+
+    0 10px;
+
+    color:white;
+
+}
+
+
+
+.modern-table tbody tr{
+
+    background:
+
+    rgba(255,255,255,.06);
+
+    transition:.3s;
+
+}
+
+
+
+.modern-table tbody tr:hover{
+
+    background:
+
+    rgba(255,255,255,.12);
+
+    transform:
+
+    translateX(5px);
+
+}
+
+
+
+.modern-table td,
+.modern-table th{
+
+    padding:15px;
+
+}
+
+
+
+.modern-table tbody tr td:first-child{
+
+    border-radius:
+
+    15px 0 0 15px;
+
+}
+
+
+
+.modern-table tbody tr td:last-child{
+
+    border-radius:
+
+    0 15px 15px 0;
+
+}
+
+
+
+.modern-table th{
+
+    color:#94a3b8;
+
+    font-size:12px;
+
+    text-transform:uppercase;
+
+}
+
+
+
+
+
+/* =====================================================
+   CHART AREA
+===================================================== */
+
+
+
+.chart-box {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+.glass-card canvas{
+
+    filter:
+
+    drop-shadow(
+
+    0 0 20px
+
+    rgba(56,189,248,.35)
+
+    );
+
+
+    transition:.4s;
+
+}
+
+
+
+.glass-card:hover canvas{
+
+
+    filter:
+
+    drop-shadow(
+
+    0 0 35px
+
+    rgba(56,189,248,.65)
+
+    );
+
+}
+
+
+
+
+
+/* =====================================================
+   FLOATING ANIMATIONS
+===================================================== */
+
+
+@keyframes heroMove{
+
+
+    50%{
+
+        transform:
+
+        translate(-40px,40px);
+
+    }
+
+
+}
+
+
+
+@keyframes heroMove2{
+
+
+    50%{
+
+        transform:
+
+        translate(50px,-30px);
+
+    }
+
+
+}
+
+
+
+
+
+/* =====================================================
+   MOUSE TILT SUPPORT
+===================================================== */
+
+
+.glass-card{
+
+    transform-style:preserve-3d;
+
+    perspective:1000px;
+
+}
+
+
+
+
+
+/* =====================================================
+   BACKGROUND PARTICLES
+===================================================== */
+
+
+.dashboard-container::before{
+
+
+    content:"";
+
+    position:fixed;
+
+    width:300px;
+
+    height:300px;
+
+    top:20%;
+
+    right:5%;
+
+    background:
+
+    radial-gradient(
+
+    circle,
+
+    rgba(56,189,248,.15),
+
+    transparent 70%
+
+    );
+
+
+    filter:blur(50px);
+
+    pointer-events:none;
+
+}
+
+
+
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+
+@media(max-width:992px){
+
+
+.dashboard-container{
+
+
+    width:100%;
+
+    margin-left:0;
+
+    padding:20px;
+
+
+}
+
+
+
+.hero-content{
+
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+}
+
+
+
+.hero-right{
+
+
+    width:100%;
+
+}
+
+
+
+}
+
+
+
+@media(max-width:768px){
+
+
+.dashboard-container{
+
+
+    padding:15px;
+
+}
+
+
+
+.hero-dashboard{
+
+
+    padding:25px;
+
+}
+
+
+
+.hero-left h1{
+
+
+    font-size:30px;
+
+}
+
+
+
+.stat-card{
+    height:180px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+
+    padding:28px;
+}
+
+
+.icon{
+
+
+    width:60px;
+
+    height:60px;
+
+    min-width:60px;
+
+    font-size:26px;
+
+}
+
+
+
+.stat-content h2{
+
+
+    font-size:30px;
+
+}
+
+
+
+.finance-content h2{
+
+
+    font-size:22px;
+
+}
+
+
+
+.chart-box{
+
+
+    height:220px;
+
+}
+
+
+}
+
+
+
+/* =====================================================
+   SMOOTH PAGE LOAD
+===================================================== */
+
+
+.dashboard-container{
+
+
+    animation:
+
+    dashboardFade .6s ease;
+
+}
+
+
+
+@keyframes dashboardFade{
+
+
+from{
+
+    opacity:0;
+
+    transform:translateY(20px);
+
+}
+
+
+to{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+
+}
+/* =====================================================
+   FIX CARD HEIGHTS & ALIGNMENT
+===================================================== */
+
+
+/* Stop bootstrap row stretching */
+
+.dashboard-container .row{
+
+    align-items:flex-start !important;
+
+}
+
+
+/* Main glass cards */
+
+.glass-card{
+
+    height:auto !important;
+
+    min-height:unset;
+
+}
+
+
+
+/* KPI Cards */
+
+.stat-card{
+
+    min-height:170px;
+
+    height:170px !important;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+
+
+/* Finance cards */
+
+.finance-card{
+
+    min-height:150px;
+
+    height:150px !important;
+
+}
+
+
+
+/* Analytics cards */
+
+.chart-box{
+
+    height:300px;
+
+}
+
+
+
+/* Occupancy + tables */
+
+.glass-card .table-responsive{
+
+    max-height:350px;
+
+    overflow-y:auto;
+
+}
+
+
+
+/* Keep content inside */
+
+.stat-content,
+.finance-content{
+
+    flex:1;
+
+    overflow:hidden;
+
+}
+
+
+
+/* Better spacing between sections */
+
+.dashboard-container .row{
+
+    margin-bottom:25px;
+
+}
+
+
+
+/* Prevent cards touching sidebar */
+
+.dashboard-container {
+    width: 100%;
+    margin-left: 0;
+}
+
+
+
+
+/* Hero fixed proportion */
+
+.hero-dashboard{
+
+    min-height:30px;
+
+}
+
+
+
+/* Mobile reset */
+
+@media(max-width:768px){
+
+    .stat-card,
+    .finance-card{
+
+        height:auto !important;
+
+        min-height:140px;
+
+    }
+
+
+    .dashboard-container{
+
+        padding:15px;
+
+    }
+
+}
+/* ===== Premium KPI Header ===== */
+
+.card-title{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2px;
+    color:#94a3b8;
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:6px;
+
+    padding:5px 10px;
+
+    border-radius:20px;
+
+    font-size:11px;
+    font-weight:700;
+}
+
+.status.live{
+    color:#22c55e;
+    background:rgba(34,197,94,.12);
+}
+
+.dot{
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    animation:pulse 1.8s infinite;
+}
+
+@keyframes pulse{
+
+    0%{
+        box-shadow:0 0 0 0 rgba(34,197,94,.6);
+    }
+
+    100%{
+        box-shadow:0 0 0 10px rgba(34,197,94,0);
+    }
+
+}
+.stat-icon.purple{
+    background:linear-gradient(135deg,#7c3aed,#a855f7);
+}
+.stat-card{
+    display:flex;
+    align-items:center;
+    gap:20px;
+
+    height:180px;
+
+    border-radius:24px;
+}
+
+.stat-content{
+    flex:1;
+}
+
+.stat-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.counter{
+    margin:12px 0;
+}
+
+.sparkline{
+    margin-top:12px;
+    height:40px !important;
+}
+/* KPI cards: compact vertical layout for a five-column row */
+.kpi-row > .col {
+    display: flex;
+}
+
+.kpi-row .stat-card {
+    width: 100%;
+    min-height: 235px;
+    height: auto !important;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+}
+
+.kpi-row .icon {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border-radius: 16px;
+    font-size: 23px;
+}
+
+.kpi-row .stat-content {
+    min-width: 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.kpi-row .stat-header {
+    gap: 8px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.kpi-row .card-title {
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.kpi-row .status {
+    padding: 4px 7px;
+    font-size: 9px;
+}
+
+.kpi-row .dot {
+    width: 6px;
+    height: 6px;
+}
+
+.kpi-row .stat-content h2 {
+    margin: 10px 0 8px;
+    font-size: 34px;
+    line-height: 1;
+     color:#000000;
+}
+
+.kpi-row .trend {
+    max-width: 100%;
+    padding: 5px 8px;
+    font-size: 10px;
+}
+
+.kpi-row .sparkline {
+    height: 34px !important;
+    margin-top: auto;
+}
+/* Occupancy and payments: matching card heights */
+.overview-row > [class*="col-"] {
+    display: flex;
+}
+
+.overview-row .glass-card {
+    width: 100%;
+    min-height: 480px;
+}
+
+.overview-row .chart-box {
+    height: 260px;
+}
+
+.overview-row .table-responsive {
+    max-height: 340px;
+    overflow-y: auto;
+}
+
+/* Full-width chart cards */
+.dashboard-container > .row > .col-12 > .glass-card {
+    padding: 30px;
+}
+
+.dashboard-container canvas {
+    max-width: 100%;
+}
+/* Finance cards: balanced internal layout */
+.finance-row > .col {
+    display: flex;
+}
+
+.finance-row .finance-card {
+    width: 100%;
+    min-height: 185px;
+    height: auto !important;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.finance-row .finance-icon {
+    width: 62px;
+    height: 62px;
+    min-width: 62px;
+    border-radius: 18px;
+    font-size: 26px;
+}
+
+.finance-row .finance-content {
+    min-width: 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: visible;
+}
+
+.finance-row .finance-content small {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #94a3b8;
+}
+
+.finance-row .finance-content h2 {
+    margin: 9px 0;
+    font-size: clamp(1.2rem, 1.8vw, 1.9rem);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+     color:#22c55e;
+}
+
+.finance-row .trend {
+    max-width: 100%;
+    padding: 5px 9px;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.subscription-overview .table th,
+.subscription-overview .table td {
+    white-space: nowrap;
+}
+
+.portfolio-map-card #portfolioMap { height: 440px; border-radius: 18px; overflow: hidden; }
+.portfolio-map-card .map-empty { margin: 14px 0 0; color: #94a3b8; }
+
+.plan-badge,
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: .34rem .65rem;
+    border-radius: 999px;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+}
+
+.plan-starter { background: #e0f2fe; color: #0369a1; }
+.plan-growth { background: #ede9fe; color: #6d28d9; }
+.plan-pro { background: #fef3c7; color: #b45309; }
+.status-trialing { background: #dcfce7; color: #15803d; }
+.status-active { background: #dbeafe; color: #1d4ed8; }
+.status-cancelled,
+.status-expired { background: #fee2e2; color: #b91c1c; }

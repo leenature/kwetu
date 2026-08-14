@@ -1,0 +1,362 @@
+/* =====================================
+   KWETU PREMIUM THEME
+   Glassmorphism Background System
+===================================== */
+
+
+/* Root Colors */
+
+:root{
+
+
+    --bg-main:
+    linear-gradient(
+        135deg,
+        #eef2ff,
+        #f8fafc,
+        #e0f2fe
+    );
+
+
+    --card-bg:
+
+    rgba(255,255,255,.35);
+
+
+
+    --glass-border:
+
+    rgba(255,255,255,.45);
+
+
+
+    --text-color:
+
+    #1e293b;
+
+
+
+    --muted-text:
+
+    #64748b;
+
+
+
+    --shadow:
+
+    10px 20px 40px rgba(15,23,42,.12);
+
+
+
+}
+
+
+
+
+
+/* Dark Mode Ready */
+
+.dark-mode{
+
+
+    --bg-main:
+
+    linear-gradient(
+        135deg,
+        #020617,
+        #0f172a,
+        #111827
+    );
+
+
+
+    --card-bg:
+
+    rgba(15,23,42,.55);
+
+
+
+    --glass-border:
+
+    rgba(255,255,255,.12);
+
+
+
+    --text-color:
+
+    #f8fafc;
+
+
+
+    --muted-text:
+
+    #94a3b8;
+
+
+
+    --shadow:
+
+    10px 20px 45px rgba(0,0,0,.45);
+
+
+
+}
+
+
+
+
+
+/* =====================================
+   BODY BACKGROUND
+===================================== */
+
+
+body{
+
+
+    background:
+
+    var(--bg-main);
+
+
+
+    color:
+
+    var(--text-color);
+
+
+
+    min-height:100vh;
+
+
+
+    overflow-x:hidden;
+
+
+}
+
+
+
+
+
+
+/* =====================================
+   FLOATING BACKGROUND EFFECTS
+===================================== */
+
+
+body::before{
+
+
+    content:"";
+
+    position:fixed;
+
+
+    width:350px;
+
+    height:350px;
+
+
+    top:-120px;
+
+    left:-120px;
+
+
+
+    background:
+
+    radial-gradient(
+
+        circle,
+
+        rgba(59,130,246,.35),
+
+        transparent 70%
+
+    );
+
+
+
+    filter:blur(40px);
+
+
+
+    z-index:-1;
+
+
+
+    animation:
+
+    floatOne 12s infinite alternate;
+
+
+
+}
+
+
+
+
+
+
+body::after{
+
+
+    content:"";
+
+    position:fixed;
+
+
+
+    width:400px;
+
+    height:400px;
+
+
+
+    bottom:-150px;
+
+    right:-150px;
+
+
+
+    background:
+
+
+    radial-gradient(
+
+        circle,
+
+        rgba(168,85,247,.35),
+
+        transparent 70%
+
+    );
+
+
+
+    filter:blur(50px);
+
+
+
+    z-index:-1;
+
+
+
+    animation:
+
+    floatTwo 15s infinite alternate;
+
+
+
+}
+
+
+
+
+
+
+
+/* Floating Animation */
+
+
+@keyframes floatOne{
+
+
+    from{
+
+
+        transform:translate(0,0);
+
+
+    }
+
+
+
+    to{
+
+
+        transform:translate(80px,50px);
+
+
+    }
+
+
+}
+
+
+
+
+@keyframes floatTwo{
+
+
+    from{
+
+
+        transform:translate(0,0);
+
+
+    }
+
+
+
+    to{
+
+
+        transform:translate(-80px,-50px);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+/* Text */
+
+
+h1,h2,h3,h4,h5,h6{
+
+
+    color:var(--text-color);
+
+
+}
+
+
+
+p{
+
+
+    color:var(--muted-text);
+
+
+}
+
+
+
+
+
+
+/* Smooth theme transition */
+
+
+*{
+
+
+    transition:
+
+    background .3s ease,
+
+    color .3s ease,
+
+    border .3s ease;
+
+
+
+}

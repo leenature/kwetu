@@ -1,0 +1,263 @@
+.app-navbar {
+    position: sticky;
+    top: 20px;
+    z-index: 900;
+
+    min-height: 82px;
+    margin-bottom: 25px;
+    padding: 14px 20px;
+
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) minmax(260px, 460px) minmax(300px, 1fr);
+    align-items: center;
+    gap: 20px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
+}
+
+.nav-left,
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-right {
+    justify-content: flex-end;
+}
+
+.nav-eyebrow {
+    display: block;
+    color: var(--muted-text);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+.nav-title {
+    margin: 2px 0 0;
+    color: var(--text-color);
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.nav-icon {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+
+    color: var(--text-color);
+    font-size: 19px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, .18);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+}
+
+.nav-icon:hover,
+.profile-summary:hover {
+    transform: translateY(-2px);
+    background: rgba(37, 99, 235, .12);
+}
+
+.notification-dot {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    width: 7px;
+    height: 7px;
+    border: 2px solid var(--card-bg);
+    border-radius: 50%;
+    background: #ef4444;
+}
+
+.nav-search {
+    height: 46px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+
+    color: var(--muted-text);
+    background: rgba(255, 255, 255, .2);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+}
+
+.nav-search input {
+    width: 100%;
+    min-width: 0;
+    color: var(--text-color);
+    outline: none;
+    border: 0;
+    background: transparent;
+}
+
+.nav-search kbd {
+    padding: 3px 6px;
+    color: var(--muted-text);
+    font-size: 10px;
+    white-space: nowrap;
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+}
+
+.profile-summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px 6px 6px;
+
+    color: var(--text-color);
+    cursor: pointer;
+    background: rgba(255, 255, 255, .18);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+}
+
+.profile-avatar {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    border-radius: 12px;
+}
+
+.profile-details {
+    display: grid;
+    text-align: left;
+}
+
+.profile-details strong {
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+.profile-details small {
+    color: var(--muted-text);
+    font-size: 10px;
+}
+
+@media (max-width: 1100px) {
+    .app-navbar {
+        grid-template-columns: 1fr auto;
+    }
+
+    .nav-search {
+        display: none;
+    }
+}
+
+@media (max-width: 650px) {
+    .app-navbar {
+        top: 12px;
+        padding: 12px;
+    }
+
+    .nav-eyebrow,
+    .profile-details,
+    .nav-right > .nav-icon:nth-child(2),
+    .nav-right > .nav-icon:nth-child(3) {
+        display: none;
+    }
+
+    .nav-title {
+        font-size: 18px;
+    }
+}
+.profile-menu {
+    position: relative;
+}
+
+.notification-menu { position: relative; }
+.notification-dropdown {
+    position: absolute; right: 0; top: calc(100% + 10px); z-index: 1001;
+    width: min(360px, calc(100vw - 32px)); display: none; overflow: hidden;
+    background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 16px;
+    box-shadow: var(--shadow); backdrop-filter: blur(18px);
+}
+.notification-menu.open .notification-dropdown { display: block; }
+.notification-heading { display: grid; gap: 2px; padding: 14px 16px; border-bottom: 1px solid var(--glass-border); }
+.notification-heading small, .notification-item small, .notification-item em, .notification-empty { color: var(--muted-text); font-size: 11px; }
+.notification-list { max-height: 390px; overflow-y: auto; }
+.notification-item { width: 100%; display: flex; gap: 11px; padding: 13px 16px; color: var(--text-color); text-align: left; background: transparent; border: 0; border-bottom: 1px solid var(--glass-border); }
+.notification-item:hover, .notification-item.unread { background: rgba(37, 99, 235, .09); }
+.notification-item > i { padding-top: 2px; color: #2563eb; }
+.notification-item span { display: grid; gap: 2px; }.notification-item em { font-style: normal; }.notification-empty { padding: 22px 16px; margin: 0; text-align: center; }
+
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 1001;
+    width: 210px;
+    display: none;
+    padding: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
+}
+
+.profile-menu.open .profile-dropdown {
+    display: block;
+}
+
+.profile-dropdown-user {
+    display: grid;
+    gap: 6px;
+    padding: 8px 10px 12px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.profile-dropdown a,
+.profile-dropdown button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    color: var(--text-color);
+    text-decoration: none;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+}
+
+.profile-dropdown a:hover,
+.profile-dropdown button:hover {
+    background: rgba(37, 99, 235, .12);
+}
+
+.profile-dropdown form {
+    margin: 5px 0 0;
+}
+
+.role-badge {
+    width: fit-content;
+    padding: 3px 7px;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 999px;
+}
+
+.role-badge.super-admin { color: #dc2626; background: #fee2e2; }
+.role-badge.owner { color: #2563eb; background: #dbeafe; }
+.role-badge.manager { color: #b45309; background: #fef3c7; }
+.role-badge.accountant { color: #15803d; background: #dcfce7; }
+.role-badge.caretaker { color: #7e22ce; background: #f3e8ff; }

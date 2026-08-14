@@ -1,116 +1,173 @@
 @extends('layouts.app')
 
+@section('title', 'Properties')
+
 @section('content')
 
-<div class="container-fluid">
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
-
+<div class="properties-page">
+    <header class="module-header">
         <div>
-            <h3>Properties</h3>
-            <small class="text-muted">
-                Manage all your properties
-            </small>
+            <p class="module-eyebrow">Portfolio management</p>
+            <h1 class="module-title">Properties</h1>
+            <p class="module-subtitle">Manage your property portfolio, locations, and availability.</p>
         </div>
 
-        <a href="{{ route('properties.create') }}" class="btn btn-primary">
-            + Add Property
+        <a href="{{ route('properties.create') }}" class="btn btn-primary px-3 py-2">
+            <i class="bi bi-plus-lg me-1"></i>
+            Add Property
         </a>
+    </header>
 
-    </div>
     @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
+        <div class="alert alert-success alert-dismissible fade show">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            {{ session('success') }}
+
+            <button class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="module-card property-summary">
+                <span class="property-summary-icon summary-blue">
+                    <i class="bi bi-buildings-fill"></i>
+                </span>
+                <div>
+                    <small>TOTAL PROPERTIES</small>
+                    <strong>{{ $properties->total() }}</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="module-card property-summary">
+                <span class="property-summary-icon summary-green">
+                    <i class="bi bi-check-circle-fill"></i>
+                </span>
+                <div>
+                    <small>ACTIVE</small>
+                    <strong>{{ $properties->where('status', 'Active')->count() }}</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="module-card property-summary">
+                <span class="property-summary-icon summary-red">
+                    <i class="bi bi-pause-circle-fill"></i>
+                </span>
+                <div>
+                    <small>INACTIVE</small>
+                    <strong>{{ $properties->where('status', 'Inactive')->count() }}</strong>
+                </div>
+            </div>
+        </div>
     </div>
-@endif
 
-    <div class="card shadow-sm">
+    <div class="module-card mb-4">
+        <form method="GET" class="module-toolbar">
+            <div class="module-search">
+                <i class="bi bi-search"></i>
+                <input type="search"
+                       name="search"
+                       value="{{ request('search') }}"
+                       class="form-control"
+                       placeholder="Search by property, code, town, or county">
+            </div>
 
-        <div class="card-body">
+            <button class="btn btn-dark px-4" type="submit">
+                Search
+            </button>
 
-            <table class="table table-hover">
+            @if(request('search'))
+                <a href="{{ route('properties.index') }}" class="btn btn-outline-secondary">
+                    Clear
+                </a>
+            @endif
+        </form>
+    </div>
 
+    <div class="module-card p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table properties-table align-middle">
                 <thead>
-
-                <tr>
-
-                    <th>Code</th>
-
-                    <th>Name</th>
-
-                    <th>Town</th>
-
-                    <th>Status</th>
-
-                    <th width="150">Action</th>
-
-                </tr>
-
+                    <tr>
+                        <th>Property</th>
+                        <th>Type</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
                 </thead>
 
                 <tbody>
+                    @forelse($properties as $property)
+                        <tr>
+                            <td>
+                                <span class="property-code">{{ $property->code }}</span>
+                                <span class="property-name">{{ $property->name }}</span>
+                                <span class="badge {{ $property->verification_status === 'Verified' ? 'text-bg-success' : ($property->verification_status === 'Rejected' ? 'text-bg-danger' : 'text-bg-warning') }} ms-1">{{ $property->verification_status === 'Verified' ? 'Verified' : $property->verification_status }}</span>
+                            </td>
 
-                @forelse($properties as $property)
+                            <td>{{ $property->type }}</td>
 
-                    <tr>
+                            <td>
+                                <span class="property-name">{{ $property->town }}</span>
+                                <span class="property-location">{{ $property->county }}</span>
+                            </td>
 
-                        <td>{{ $property->code }}</td>
+                            <td>
+                                <span class="status-pill {{ $property->status === 'Active' ? 'status-active' : 'status-inactive' }}">
+                                    {{ $property->status }}
+                                </span>
+                            </td>
 
-                        <td>{{ $property->name }}</td>
+                            <td>
+                                <div class="table-actions">
+                                    <a href="{{ route('properties.show', $property) }}"
+                                       class="table-action action-view"
+                                       aria-label="View {{ $property->name }}">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>
 
-                        <td>{{ $property->town }}</td>
+                                    <a href="{{ route('properties.edit', $property) }}"
+                                       class="table-action action-edit"
+                                       aria-label="Edit {{ $property->name }}">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
 
-                        <td>{{ $property->status }}</td>
+                                    <form action="{{ route('properties.destroy', $property) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
 
-                        <td>
-
-                          <td>
-    <a href="{{ route('properties.edit', $property) }}"
-       class="btn btn-sm btn-warning">
-        Edit
-    </a>
-
-    <form action="{{ route('properties.destroy', $property) }}"
-          method="POST"
-          class="d-inline">
-
-        @csrf
-        @method('DELETE')
-
-        <button class="btn btn-sm btn-danger"
-                onclick="return confirm('Delete this property?')">
-            Delete
-        </button>
-
-    </form>
-</td>
-
-                        </td>
-
-                    </tr>
-
-                @empty
-
-                    <tr>
-
-                        <td colspan="5" class="text-center">
-
-                            No properties found.
-
-                        </td>
-
-                    </tr>
-
-                @endforelse
-
+                                        <button type="submit"
+                                                class="table-action action-delete"
+                                                aria-label="Delete {{ $property->name }}"
+                                                onclick="return confirm('Delete {{ $property->name }}?')">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="empty-state">
+                                <i class="bi bi-buildings"></i>
+                                <strong class="d-block">No properties found</strong>
+                                <span class="text-muted">Add your first property to begin managing your portfolio.</span>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
-
             </table>
-
         </div>
-
     </div>
 
+    <div class="mt-4">
+        {{ $properties->withQueryString()->links() }}
+    </div>
 </div>
 
 @endsection

@@ -36,6 +36,8 @@ return new class extends Migration
                 'Caretaker'
             ])->default('Owner');
 
+            $table->json('permissions')->nullable();
+
             $table->rememberToken();
 
             $table->timestamps();

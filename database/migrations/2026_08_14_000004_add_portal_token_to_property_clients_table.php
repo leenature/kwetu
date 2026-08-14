@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration; use Illuminate\Database\Schema\Blueprint; use Illuminate\Support\Facades\Schema; use Illuminate\Support\Facades\DB; use Illuminate\Support\Str;
+return new class extends Migration { public function up(): void { Schema::table('property_clients', fn(Blueprint $table)=>$table->string('portal_token',64)->nullable()->unique()->after('email')); DB::table('property_clients')->orderBy('id')->eachById(fn($client)=>DB::table('property_clients')->where('id',$client->id)->update(['portal_token'=>Str::random(48)])); } public function down(): void { Schema::table('property_clients', fn(Blueprint $table)=>$table->dropUnique(['portal_token'])->dropColumn('portal_token')); } };

@@ -1,37 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kwetu</title>
 
-    @vite(['resources/css/app.css','resources/js/app.js'])
+    <title>
+        @yield('title','Kwetu PMS')
+    </title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet">
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js'
+    ])
+    @yield('page-styles')
+
 </head>
 
-<body class="bg-light">
 
-<div class="d-flex">
+<body>
 
+
+<div class="app-wrapper">
+
+
+    {{-- Sidebar --}}
     @include('partials.sidebar')
 
-    <div class="flex-grow-1">
 
+
+    {{-- Main Area --}}
+    <main class="main-content">
+
+
+        {{-- Navbar --}}
         @include('partials.navbar')
 
-        <main class="p-4">
+
+
+        <section class="page-content">
 
             @yield('content')
 
-        </main>
+        </section>
 
-    </div>
+        @include('partials.footer')
+
+
+    </main>
+
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
+@yield('page-scripts')
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

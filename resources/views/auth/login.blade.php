@@ -1,47 +1,76 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.auth')
+
+@section('title', 'Log in — Kwetu PMS')
+
+@section('content')
+
+<div class="auth-card">
+    <h1>Welcome back</h1>
+    <p>Log in to manage your properties, tenants, and payments.</p>
+
+    @if(session('status'))
+        <div class="alert alert-success py-2">
+            {{ session('status') }}
+        </div>
+    @endif
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="mb-3">
+            <label for="email">Email address</label>
+            <input id="email"
+                   type="email"
+                   name="email"
+                   class="form-control"
+                   value="{{ old('email') }}"
+                   required
+                   autofocus
+                   autocomplete="username">
+
+            @error('email')
+                <small class="text-danger d-block mt-1">{{ $message }}</small>
+            @enderror
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <div class="mb-3">
+            <div class="d-flex justify-content-between">
+                <label for="password">Password</label>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+                <a href="{{ route('password.request') }}"
+                   class="text-decoration-none small"
+                   style="color:#60a5fa;">
+                    Forgot password?
                 </a>
-            @endif
+            </div>
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+            <input id="password"
+                   type="password"
+                   name="password"
+                   class="form-control"
+                   required
+                   autocomplete="current-password">
+
+            @error('password')
+                <small class="text-danger d-block mt-1">{{ $message }}</small>
+            @enderror
         </div>
+
+        <label class="form-check mb-4">
+            <input type="checkbox" name="remember" class="form-check-input">
+            <span class="form-check-label text-light small">Keep me signed in</span>
+        </label>
+
+        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
+            <i class="bi bi-box-arrow-in-right me-1"></i>
+            Log in
+        </button>
     </form>
-</x-guest-layout>
+
+    <p class="auth-footer">
+        New to Kwetu?
+        <a href="{{ route('register') }}">Start your free trial</a>
+    </p>
+</div>
+
+@endsection

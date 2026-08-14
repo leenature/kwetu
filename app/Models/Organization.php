@@ -8,6 +8,7 @@ class Organization extends Model
 {
     protected $fillable = [
         'name',
+        'account_type',
         'registration_number',
         'kra_pin',
         'phone',
@@ -18,7 +19,17 @@ class Organization extends Model
         'country',
         'logo',
         'status',
+        'plan',
+        'subscription_status',
+        'trial_ends_at',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'trial_ends_at' => 'datetime',
+        ];
+    }
 
     public function users()
     {

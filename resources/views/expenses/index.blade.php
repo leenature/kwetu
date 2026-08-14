@@ -1,31 +1,9 @@
 @extends('layouts.app')
-
+@section('title', 'Expenses')
 @section('content')
-
-<div class="container-fluid">
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
-
-        <h3>💵 Expenses</h3>
-
-        <button class="btn btn-primary">
-            Add 💵 Expenses
-        </button>
-
-    </div>
-
-    <div class="card shadow-sm">
-
-        <div class="card-body">
-
-            <h5>Coming Soon...</h5>
-
-            <p>This module is under development.</p>
-
-        </div>
-
-    </div>
-
-</div>
-
+<div class="page-header"><div><h2>Expenses</h2><p>Track operating costs by property, category, and approval status.</p></div><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#expenseModal"><i class="bi bi-plus-lg me-1"></i> Add expense</button></div>
+@if(session('success'))<div class="alert alert-success">{{ session('success') }}</div>@endif
+<div class="finance-kpis"><div class="finance-kpi"><i class="bi bi-credit-card"></i><small>Paid this month</small><strong>KSh {{ number_format($monthTotal, 2) }}</strong></div><div class="finance-kpi"><i class="bi bi-hourglass-split"></i><small>Awaiting payment</small><strong>KSh {{ number_format($pendingTotal, 2) }}</strong></div><div class="finance-kpi"><i class="bi bi-receipt-cutoff"></i><small>Expense entries</small><strong>{{ $expenses->total() }}</strong></div></div>
+<div class="finance-panel"><div class="finance-panel-head"><strong>Expense register</strong></div><div class="table-responsive"><table class="table finance-table"><thead><tr><th>Date</th><th>Description</th><th>Property</th><th>Category</th><th>Status</th><th class="text-end">Amount</th><th></th></tr></thead><tbody>@forelse($expenses as $expense)<tr><td>{{ $expense->expense_date->format('d M Y') }}</td><td><strong>{{ $expense->title }}</strong><br><small>{{ $expense->vendor ?: 'No vendor' }}</small></td><td>{{ $expense->property?->name ?? '—' }}</td><td>{{ $expense->category }}</td><td><form method="POST" action="{{ route('expenses.status', $expense) }}">@csrf @method('PATCH')<select name="status" class="form-select form-select-sm status-pill status-{{ strtolower($expense->status) }}" onchange="this.form.submit()"><option {{ $expense->status === 'Paid' ? 'selected' : '' }}>Paid</option><option {{ $expense->status === 'Pending' ? 'selected' : '' }}>Pending</option><option {{ $expense->status === 'Cancelled' ? 'selected' : '' }}>Cancelled</option></select></form></td><td class="text-end fw-bold">KSh {{ number_format($expense->amount, 2) }}</td><td><form method="POST" action="{{ route('expenses.destroy', $expense) }}" onsubmit="return confirm('Remove this expense?')">@csrf @method('DELETE')<button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form></td></tr>@empty<tr><td colspan="7"><div class="empty-state"><i class="bi bi-receipt fs-2 d-block mb-2"></i>No expenses recorded yet.</div></td></tr>@endforelse</tbody></table></div>@if($expenses->hasPages())<div class="p-3">{{ $expenses->links() }}</div>@endif</div>
+<div class="modal fade" id="expenseModal" tabindex="-1"><div class="modal-dialog modal-lg"><form method="POST" action="{{ route('expenses.store') }}" class="modal-content">@csrf<div class="modal-header"><h5 class="modal-title">Add an expense</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body row g-3"><div class="col-md-8"><label class="form-label">Property</label><select name="property_id" class="form-select" required><option value="">Select property</option>@foreach($properties as $property)<option value="{{ $property->id }}">{{ $property->name }}</option>@endforeach</select></div><div class="col-md-4"><label class="form-label">Date</label><input type="date" name="expense_date" value="{{ now()->toDateString() }}" class="form-control" required></div><div class="col-md-7"><label class="form-label">Description</label><input name="title" class="form-control" required></div><div class="col-md-5"><label class="form-label">Amount (KSh)</label><input name="amount" type="number" min="0.01" step="0.01" class="form-control" required></div><div class="col-md-4"><label class="form-label">Category</label><input name="category" class="form-control" placeholder="Repairs, utilities..." required></div><div class="col-md-4"><label class="form-label">Vendor</label><input name="vendor" class="form-control"></div><div class="col-md-4"><label class="form-label">Status</label><select name="status" class="form-select"><option>Paid</option><option>Pending</option><option>Cancelled</option></select></div><div class="col-md-6"><label class="form-label">Method</label><input name="payment_method" class="form-control" placeholder="M-Pesa, bank... "></div><div class="col-md-6"><label class="form-label">Reference</label><input name="reference_number" class="form-control"></div><div class="col-12"><label class="form-label">Notes</label><textarea name="notes" class="form-control" rows="2"></textarea></div></div><div class="modal-footer"><button class="btn btn-primary">Save expense</button></div></form></div></div>
 @endsection

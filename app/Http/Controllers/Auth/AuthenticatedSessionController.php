@@ -7,6 +7,8 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Notifications\WorkspaceActivity;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -28,6 +30,16 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $user = $request->user();
+        $recipients = $user->role === 'Super Admin'
+            ? collect([$user])
+            : User::where('organization_id', $user->organization_id)->where('role', 'Owner')->get()->push($user)->unique('id');
+
+        $recipients->each(fn (User $recipient) => $recipient->notify(new WorkspaceActivity(
+            'User signed in', "{$user->name} signed in to the workspace.",
+            'bi-box-arrow-in-right', route('dashboard'),
+        )));
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
@@ -42,6 +54,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+       return redirect()->route('home');
     }
 }

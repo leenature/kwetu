@@ -1,12 +1,28 @@
 @extends('layouts.app')
 
+@section('title', 'Add Unit')
+
 @section('content')
 
 <div class="container-fluid">
 
-    <h3 class="mb-4">Add Unit</h3>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div class="card shadow-sm">
+        <div>
+            <h3 class="fw-bold mb-1">Add Unit</h3>
+            <small class="text-muted">
+                Create a new unit for a property
+            </small>
+        </div>
+
+        <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i>
+            Back
+        </a>
+
+    </div>
+
+    <div class="card shadow-sm border-0">
 
         <div class="card-body">
 
@@ -16,37 +32,93 @@
 
                 <div class="row">
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Property</label>
+                    {{-- PROPERTY --}}
+                    @if($selectedProperty)
 
-                        <select name="property_id" class="form-select" required>
+                        <input
+                            type="hidden"
+                            name="property_id"
+                            value="{{ $selectedProperty->id }}">
 
-                            <option value="">Select Property</option>
+                        <div class="col-md-6 mb-3">
 
-                            @foreach($properties as $property)
+                            <label class="form-label">
+                                Property
+                            </label>
 
-                                <option value="{{ $property->id }}">
-                                    {{ $property->name }}
+                            <input
+                                type="text"
+                                class="form-control"
+                                value="{{ $selectedProperty->name }}"
+                                readonly>
+
+                        </div>
+
+                    @else
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Property
+                            </label>
+
+                            <select
+                                name="property_id"
+                                class="form-select"
+                                required>
+
+                                <option value="">
+                                    Select Property
                                 </option>
 
-                            @endforeach
+                                @foreach($properties as $property)
 
-                        </select>
+                                    <option
+                                        value="{{ $property->id }}"
+                                        {{ old('property_id') == $property->id ? 'selected' : '' }}>
+
+                                        {{ $property->name }}
+
+                                    </option>
+
+                                @endforeach
+
+                            </select>
+
+                        </div>
+
+                    @endif
+
+
+
+                    {{-- UNIT NUMBER --}}
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Unit Number
+                        </label>
+
+                        <input
+                            type="text"
+                            name="unit_number"
+                            class="form-control"
+                            value="{{ old('unit_number') }}"
+                            required>
 
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Unit Number</label>
-                        <input type="text"
-                               name="unit_number"
-                               class="form-control"
-                               required>
-                    </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Unit Type</label>
 
-                        <select name="unit_type" class="form-select">
+                    {{-- UNIT TYPE --}}
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Unit Type
+                        </label>
+
+                        <select
+                            name="unit_type"
+                            class="form-select">
 
                             <option>Bedsitter</option>
                             <option>Studio</option>
@@ -61,65 +133,113 @@
 
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Monthly Rent</label>
 
-                        <input type="number"
-                               name="monthly_rent"
-                               class="form-control"
-                               required>
+
+                    {{-- MONTHLY RENT --}}
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Monthly Rent
+                        </label>
+
+                        <input
+                            type="number"
+                            name="monthly_rent"
+                            class="form-control"
+                            value="{{ old('monthly_rent') }}"
+                            required>
+
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Deposit</label>
 
-                        <input type="number"
-                               name="deposit"
-                               class="form-control"
-                               required>
+
+                    {{-- DEPOSIT --}}
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Deposit
+                        </label>
+
+                        <input
+                            type="number"
+                            name="deposit"
+                            class="form-control"
+                            value="{{ old('deposit') }}"
+                            required>
+
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Floor</label>
 
-                        <input type="number"
-                               name="floor"
-                               class="form-control"
-                               value="1">
+
+                    {{-- FLOOR --}}
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Floor
+                        </label>
+
+                        <input
+                            type="number"
+                            name="floor"
+                            class="form-control"
+                            value="{{ old('floor',1) }}">
+
                     </div>
 
+
+
+                    {{-- STATUS --}}
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">Status</label>
 
-                        <select name="status" class="form-select">
+                        <label class="form-label">
+                            Status
+                        </label>
 
-                            <option>Vacant</option>
-                            <option>Occupied</option>
-                            <option>Maintenance</option>
+                        <select
+                            name="status"
+                            class="form-select">
+
+                            <option value="Vacant">Vacant</option>
+                            <option value="Occupied">Occupied</option>
+                            <option value="Maintenance">Maintenance</option>
 
                         </select>
 
                     </div>
 
-                    <div class="col-md-12 mb-3">
 
-                        <label class="form-label">Description</label>
 
-                        <textarea name="description"
-                                  rows="4"
-                                  class="form-control"></textarea>
+                    {{-- DESCRIPTION --}}
+                    <div class="col-md-12 mb-4">
+
+                        <label class="form-label">
+                            Description
+                        </label>
+
+                        <textarea
+                            name="description"
+                            rows="4"
+                            class="form-control">{{ old('description') }}</textarea>
 
                     </div>
 
                 </div>
 
+
+
                 <button class="btn btn-primary">
+
+                    <i class="bi bi-check-circle"></i>
+
                     Save Unit
+
                 </button>
 
-                <a href="{{ route('units.index') }}"
-                   class="btn btn-secondary">
+                <a href="{{ url()->previous() }}"
+                   class="btn btn-light border">
+
                     Cancel
+
                 </a>
 
             </form>

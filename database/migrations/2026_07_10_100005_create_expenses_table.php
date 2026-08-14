@@ -15,6 +15,10 @@ return new class extends Migration
 
             $table->id();
 
+            $table->foreignId('organization_id')
+                  ->constrained()
+                  ->cascadeOnDelete();
+
             $table->foreignId('property_id')
                   ->constrained()
                   ->cascadeOnDelete();

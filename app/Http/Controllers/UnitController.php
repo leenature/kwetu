@@ -14,17 +14,39 @@ class UnitController extends Controller
 
         return view('units.index', compact('units'));
     }
+public function create(Request $request)
+{
+    $properties = Property::orderBy('name')->get();
 
-    public function create()
-    {
-        $properties = Property::orderBy('name')->get();
+    $selectedProperty = $request->filled('property')
+        ? Property::findOrFail($request->integer('property'))
+        : null;
 
-        return view('units.create', compact('properties'));
-    }
+    return view('units.create', compact('properties', 'selectedProperty'));
+}
+public function availableUnits(Property $property)
+{
+    return response()->json(
+        $property->units()
+            ->where('status', 'Vacant')
+            ->orderBy('unit_number')
+            ->get(['id', 'unit_number', 'unit_type', 'monthly_rent'])
+    );
+}
+public function propertyUnits(Property $property)
+{
+    $units = $property->units()
+        ->latest()
+        ->paginate(15);
 
+    return view('units.property-units', compact(
+        'property',
+        'units'
+    ));
+}
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'property_id'   => 'required|exists:properties,id',
             'unit_number'   => 'required',
             'unit_type'     => 'required',
@@ -34,7 +56,11 @@ class UnitController extends Controller
             'status'        => 'required',
         ]);
 
-        Unit::create($request->all());
+        // Property uses an organization scope, so this also prevents a crafted
+        // request from attaching a unit to another owner's property.
+        Property::findOrFail($validated['property_id']);
+
+        Unit::create($validated);
 
         return redirect()
             ->route('units.index')
@@ -47,9 +73,9 @@ class UnitController extends Controller
 
     return view('units.edit', compact('unit', 'properties'));
 }
-    public function update(Request $request, Unit $unit)
+public function update(Request $request, Unit $unit)
 {
-    $request->validate([
+    $validated = $request->validate([
         'property_id' => 'required|exists:properties,id',
         'unit_number' => 'required',
         'unit_type' => 'required',
@@ -59,7 +85,9 @@ class UnitController extends Controller
         'status' => 'required',
     ]);
 
-    $unit->update($request->all());
+    Property::findOrFail($validated['property_id']);
+
+    $unit->update($validated);
 
     return redirect()
         ->route('units.index')

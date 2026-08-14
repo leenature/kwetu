@@ -1,31 +1,9 @@
 @extends('layouts.app')
-
+@section('title', 'Payments')
 @section('content')
-
-<div class="container-fluid">
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
-
-        <h3>💰 Payments</h3>
-
-        <button class="btn btn-primary">
-            Add Property
-        </button>
-
-    </div>
-
-    <div class="card shadow-sm">
-
-        <div class="card-body">
-
-            <h5>Coming Soon...</h5>
-
-            <p>This module is under development.</p>
-
-        </div>
-
-    </div>
-
-</div>
-
+<div class="page-header"><div><h2>Payments</h2><p>Record collections and keep every tenant receipt traceable.</p></div><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal"><i class="bi bi-plus-lg me-1"></i> Record payment</button></div>
+@if(session('success'))<div class="alert alert-success">{{ session('success') }}</div>@endif
+<div class="finance-kpis"><div class="finance-kpi"><i class="bi bi-calendar-check"></i><small>Collected this month</small><strong>KSh {{ number_format($monthTotal, 2) }}</strong></div><div class="finance-kpi"><i class="bi bi-wallet2"></i><small>All recorded collections</small><strong>KSh {{ number_format($total, 2) }}</strong></div><div class="finance-kpi"><i class="bi bi-receipt"></i><small>Receipts issued</small><strong>{{ $payments->total() }}</strong></div></div>
+<div class="finance-panel"><div class="finance-panel-head"><strong>Collection ledger</strong><span class="text-muted small">{{ $payments->total() }} records</span></div><div class="table-responsive"><table class="table finance-table"><thead><tr><th>Date</th><th>Tenant / unit</th><th>Property</th><th>Method</th><th>Receipt</th><th class="text-end">Amount</th><th></th></tr></thead><tbody>@forelse($payments as $payment)<tr><td>{{ $payment->payment_date->format('d M Y') }}</td><td><strong>{{ $payment->lease?->tenant?->full_name ?? '—' }}</strong><br><small>{{ $payment->lease?->unit?->unit_number ?? 'No unit' }}</small></td><td>{{ $payment->lease?->unit?->property?->name ?? '—' }}</td><td>{{ $payment->payment_method }}</td><td><code>{{ $payment->receipt_number }}</code></td><td class="text-end fw-bold">KSh {{ number_format($payment->amount_paid, 2) }}</td><td class="finance-actions"><form method="POST" action="{{ route('payments.destroy', $payment) }}" onsubmit="return confirm('Remove this payment record?')">@csrf @method('DELETE')<button class="btn btn-sm btn-outline-danger" title="Remove"><i class="bi bi-trash"></i></button></form></td></tr>@empty<tr><td colspan="7"><div class="empty-state"><i class="bi bi-cash-stack fs-2 d-block mb-2"></i>No payments recorded yet.</div></td></tr>@endforelse</tbody></table></div>@if($payments->hasPages())<div class="p-3">{{ $payments->links() }}</div>@endif</div>
+<div class="modal fade" id="paymentModal" tabindex="-1"><div class="modal-dialog modal-lg"><form method="POST" action="{{ route('payments.store') }}" class="modal-content">@csrf<div class="modal-header"><h5 class="modal-title">Record a payment</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body row g-3"><div class="col-12"><label class="form-label">Active lease</label><select name="lease_id" class="form-select" required><option value="">Select tenant and unit</option>@foreach($leases as $lease)<option value="{{ $lease->id }}">{{ $lease->tenant?->full_name }} — {{ $lease->unit?->property?->name }} / {{ $lease->unit?->unit_number }}</option>@endforeach</select></div><div class="col-md-6"><label class="form-label">Amount (KSh)</label><input name="amount_paid" type="number" min="0.01" step="0.01" class="form-control" required></div><div class="col-md-6"><label class="form-label">Payment date</label><input name="payment_date" type="date" value="{{ now()->toDateString() }}" class="form-control" required></div><div class="col-md-6"><label class="form-label">Method</label><select name="payment_method" class="form-select"><option>M-Pesa</option><option>Cash</option><option>Bank Transfer</option><option>Cheque</option><option>Card</option><option>Other</option></select></div><div class="col-md-6"><label class="form-label">Payment for</label><input name="payment_for" value="Rent" class="form-control" required></div><div class="col-12"><label class="form-label">Reference (optional)</label><input name="reference_number" class="form-control" placeholder="Transaction or bank reference"></div><div class="col-12"><label class="form-label">Notes</label><textarea name="notes" class="form-control" rows="2"></textarea></div></div><div class="modal-footer"><button class="btn btn-primary">Save payment</button></div></form></div></div>
 @endsection

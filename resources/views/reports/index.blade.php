@@ -1,31 +1,8 @@
 @extends('layouts.app')
-
+@section('title', 'Reports')
 @section('content')
-
-<div class="container-fluid">
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
-
-        <h3>📊 Reports</h3>
-
-        <button class="btn btn-primary">
-            Add Property
-        </button>
-
-    </div>
-
-    <div class="card shadow-sm">
-
-        <div class="card-body">
-
-            <h5>Coming Soon...</h5>
-
-            <p>This module is under development.</p>
-
-        </div>
-
-    </div>
-
-</div>
-
+<div class="page-header"><div><h2>Financial reports</h2><p>Understand collections, spending, and net performance in one view.</p></div><button class="btn btn-outline-primary" onclick="window.print()"><i class="bi bi-printer me-1"></i> Print report</button></div>
+<form class="finance-panel p-3 mb-4" method="GET"><div class="row g-3 align-items-end"><div class="col-md-4"><label class="form-label">From</label><input name="from" type="date" value="{{ $from->toDateString() }}" class="form-control"></div><div class="col-md-4"><label class="form-label">To</label><input name="to" type="date" value="{{ $to->toDateString() }}" class="form-control"></div><div class="col-md-4"><button class="btn btn-primary w-100"><i class="bi bi-funnel me-1"></i> Update report</button></div></div></form>
+<div class="finance-kpis"><div class="finance-kpi"><i class="bi bi-arrow-down-circle"></i><small>Income collected</small><strong>KSh {{ number_format($income, 2) }}</strong></div><div class="finance-kpi"><i class="bi bi-arrow-up-circle"></i><small>Paid expenses</small><strong>KSh {{ number_format($spend, 2) }}</strong></div><div class="finance-kpi"><i class="bi bi-graph-up-arrow"></i><small>Net cash position</small><strong class="{{ $income - $spend < 0 ? 'text-danger' : '' }}">KSh {{ number_format($income - $spend, 2) }}</strong></div></div>
+<div class="row g-4"><div class="col-lg-6"><div class="finance-panel report-card p-4"><h5 class="mb-1">Collections by property</h5><p class="small mb-3">Income received in the selected period.</p><ul class="report-list">@forelse($byProperty as $property => $amount)<li><span>{{ $property }}</span><strong>KSh {{ number_format($amount, 2) }}</strong></li>@empty<li><span>No payment activity in this period.</span></li>@endforelse</ul></div></div><div class="col-lg-6"><div class="finance-panel report-card p-4"><h5 class="mb-1">Spending by category</h5><p class="small mb-3">Paid expenses in the selected period.</p><ul class="report-list">@forelse($expenseCategories as $category => $amount)<li><span>{{ $category }}</span><strong>KSh {{ number_format($amount, 2) }}</strong></li>@empty<li><span>No paid expenses in this period.</span></li>@endforelse</ul></div></div></div>
 @endsection

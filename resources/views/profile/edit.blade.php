@@ -1,29 +1,8 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout>
+@extends('layouts.app')
+@section('title', 'My account')
+@section('content')
+<div class="page-header"><div><h2>My account</h2><p>Update your name, email, and password in one place.</p></div><a href="{{ route('settings.index') }}" class="btn btn-outline-primary">Back to settings</a></div>
+@if(session('status') === 'profile-updated')<div class="alert alert-success">Your details have been saved.</div>@endif
+@if(session('status') === 'password-updated')<div class="alert alert-success">Your password has been changed.</div>@endif
+<div class="row g-4"><div class="col-lg-6"><form class="finance-panel p-4" method="POST" action="{{ route('profile.update') }}">@csrf @method('PATCH')<h5>Personal details</h5><p class="small">This is the name and email you use to sign in.</p><div class="mb-3"><label class="form-label">Your name</label><input name="name" value="{{ old('name', $user->name) }}" class="form-control" required autofocus>@error('name')<small class="text-danger">{{ $message }}</small>@enderror</div><div class="mb-3"><label class="form-label">Email address</label><input name="email" type="email" value="{{ old('email', $user->email) }}" class="form-control" required>@error('email')<small class="text-danger">{{ $message }}</small>@enderror</div><button class="btn btn-primary">Save my details</button></form></div><div class="col-lg-6"><form class="finance-panel p-4" method="POST" action="{{ route('password.update') }}">@csrf @method('PUT')<h5>Change password</h5><p class="small">Use at least 8 characters. Your new password stays private.</p><div class="mb-3"><label class="form-label">Current password</label><input name="current_password" type="password" class="form-control" required autocomplete="current-password">@error('current_password', 'updatePassword')<small class="text-danger">{{ $message }}</small>@enderror</div><div class="mb-3"><label class="form-label">New password</label><input name="password" type="password" class="form-control" required autocomplete="new-password">@error('password', 'updatePassword')<small class="text-danger">{{ $message }}</small>@enderror</div><div class="mb-3"><label class="form-label">Confirm new password</label><input name="password_confirmation" type="password" class="form-control" required autocomplete="new-password"></div><button class="btn btn-primary">Change password</button></form></div></div>
+@endsection

@@ -101,8 +101,7 @@
 
                         <label class="form-label">Gender</label>
 
-                        <select name="gender" class="form-select">
-
+                        <select name="gender" class="form-select" required>
                             <option value="">Select Gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -253,37 +252,45 @@
 </div>
 
 <script>
+document.getElementById('property').addEventListener('change', async function () {
+    const propertyId = this.value;
+    const unit = document.getElementById('unit');
 
-document.getElementById('property').addEventListener('change', function () {
+    if (!propertyId) {
+        unit.innerHTML = '<option value="">Select Property First</option>';
+        return;
+    }
 
-    let propertyId = this.value;
+    unit.innerHTML = '<option value="">Loading units...</option>';
 
-    let unit = document.getElementById('unit');
+    try {
+        const response = await fetch(`/properties/${propertyId}/available-units`, {
+            headers: { Accept: 'application/json' }
+        });
 
-    unit.innerHTML = '<option>Loading...</option>';
+        if (!response.ok) {
+            throw new Error('Could not load units.');
+        }
 
-    fetch('/property/' + propertyId + '/units')
-
-    .then(response => response.json())
-
-    .then(data => {
+        const units = await response.json();
 
         unit.innerHTML = '<option value="">Select Unit</option>';
 
-        data.forEach(function(item){
+        if (!units.length) {
+            unit.innerHTML = '<option value="">No vacant units available</option>';
+            return;
+        }
 
+        units.forEach((item) => {
             unit.innerHTML += `
                 <option value="${item.id}">
-                    ${item.unit_number} | ${item.unit_type} | KES ${item.monthly_rent}
+                    ${item.unit_number} — ${item.unit_type} — KSh ${item.monthly_rent}
                 </option>
             `;
-
         });
-
-    });
-
+    } catch (error) {
+        unit.innerHTML = '<option value="">Unable to load units</option>';
+    }
 });
-
 </script>
-
 @endsection

@@ -18,11 +18,14 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+   protected $fillable = [
+    'organization_id',
+    'name',
+    'email',
+    'password',
+    'role',
+    'permissions',
+];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -34,6 +37,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -44,6 +52,18 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'permissions' => 'array',
         ];
+    }
+
+    public function canAccessModule(string $module): bool
+    {
+        if (in_array($this->role, ['Super Admin', 'Owner'], true)) return true;
+        $defaults = [
+            'Manager' => ['properties', 'units', 'tenants', 'leases', 'payments', 'expenses', 'reports', 'maintenance'],
+            'Accountant' => ['payments', 'expenses', 'reports'],
+            'Caretaker' => ['properties', 'units', 'tenants', 'maintenance'],
+        ];
+        return in_array($module, $this->permissions ?? ($defaults[$this->role] ?? []), true);
     }
 }

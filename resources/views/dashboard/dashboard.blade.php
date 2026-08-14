@@ -6,65 +6,61 @@
     Welcome back, {{ Auth::user()->name }}
 </h2>
 
-<div class="row">
+<!-- Hero -->
+<div class="hero-dashboard mb-4">
 
-    <div class="col-md-3">
+    <div class="hero-content">
 
-        <div class="card shadow-sm">
+        <div class="hero-left">
 
-            <div class="card-body">
+            <span class="hero-badge">
+                <i class="bi bi-stars"></i>
+                Smart Property Management
+            </span>
 
-                <h5>Properties</h5>
+           <h1 class="d-flex align-items-center gap-2 fw-bold">
+    Welcome back, {{ Auth::user()->name }}
+    <i class="bi bi-stars text-warning"></i>
+</h1>
 
-                <h2>0</h2>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="col-md-3">
-
-        <div class="card shadow-sm">
-
-            <div class="card-body">
-
-                <h5>Units</h5>
-
-                <h2>0</h2>
-
-            </div>
+            <p>
+                Monitor your properties, tenants, occupancy and revenue
+                from one intelligent dashboard.
+            </p>
 
         </div>
 
-    </div>
+        <div class="hero-right">
 
-    <div class="col-md-3">
+            <div class="hero-stat">
 
-        <div class="card shadow-sm">
+                <small>Total Properties</small>
 
-            <div class="card-body">
+                <h2>{{ $properties }}</h2>
 
-                <h5>Tenants</h5>
-
-                <h2>0</h2>
+                <span>Growing portfolio</span>
 
             </div>
 
-        </div>
+            <div class="hero-stat">
 
-    </div>
+                <small>Occupancy</small>
 
-    <div class="col-md-3">
+                <h2>
+                    {{ $units > 0 ? round(($occupiedUnits/$units)*100) : 0 }}%
+                </h2>
 
-        <div class="card shadow-sm">
+                <span>Healthy occupancy</span>
 
-            <div class="card-body">
+            </div>
 
-                <h5>Payments</h5>
+            <div class="hero-stat">
 
-                <h2>KES 0</h2>
+                <small>Collected</small>
+
+                <h2>KSh {{ number_format($collectedThisMonth) }}</h2>
+
+                <span>Monthly revenue</span>
 
             </div>
 
@@ -73,5 +69,4 @@
     </div>
 
 </div>
-
 @endsection
